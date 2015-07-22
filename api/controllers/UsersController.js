@@ -60,7 +60,10 @@ module.exports = {
 			Users.find({
 				username: req.param('username')
 			}).exec(function (error, found) {
-				if (found.length) {
+				if (error) {
+					return res.json(error);
+				}
+				if (found && found.length) {
 					if (md5(req.param('password')) == found[0].password) {
 						res.json(found[0]);
 					}
