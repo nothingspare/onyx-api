@@ -23,12 +23,20 @@ module.exports.connections = {
     adapter: 'sails-disk'
   },
 
-  mysql: {
+  production: {
     adapter: 'sails-mysql',
     host: 'onyx.cnzeeucwzd8x.us-west-2.rds.amazonaws.com',
     port: 3306,
     user: 'onyx_db',
     password: '1986april9',
     database: 'onyx'
+  },
+  local: {
+    adapter: 'sails-mysql',
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '',
+    database: 'scheduler'
   }
 };

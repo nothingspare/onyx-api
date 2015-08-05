@@ -6,7 +6,10 @@
 */
 module.exports = {
 	attributes: {
-		id : { type: 'integer' },
+		id : {
+			type: 'integer',
+			primaryKey: true
+		},
 		type : { type: 'string' },
 		username : { type: 'string', required: true },
 		first_name : { type: 'string' },
@@ -16,7 +19,14 @@ module.exports = {
 		password : { type: 'string' },
 		hash : { type: 'string' },
 		status : { type: 'integer' },
-		created : { type: 'string' }
+		created : { type: 'string' },
+		viewed: { type: 'string' },
+		confirmed: { type: 'string' },
+		archived: { type: 'boolean' },
+		events: {
+			collection: 'events',
+			via: 'user_id'
+		}
 	},
 
 };

@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
 
-    id : { type: 'integer' },
+    id : { type: 'integer', primaryKey: true },
 
     location_id: { type: 'integer'},
 
@@ -34,14 +34,41 @@ module.exports = {
     friday_shift: { type: 'integer' },
     saturday_shift: { type: 'integer' },
     
-    sunday_user_id : { type: 'integer' },
-    monday_user_id : { type: 'integer' },
-    tuesday_user_id : { type: 'integer' },
-    wednesday_user_id : { type: 'integer' },
-    thursday_user_id : { type: 'integer' },
-    friday_user_id : { type: 'integer' },
-    saturday_user_id : { type: 'integer' },
+    sunday_user_id : { type: 'integer', model: 'Users' },
+    monday_user_id : { type: 'integer', model: 'Users' },
+    tuesday_user_id : { type: 'integer', model: 'Users' },
+    wednesday_user_id : { type: 'integer', model: 'Users' },
+    thursday_user_id : { type: 'integer', model: 'Users' },
+    friday_user_id : { type: 'integer', model: 'Users' },
+    saturday_user_id : { type: 'integer', model: 'Users' },
 
-    archive: {type: 'integer' }
+    archive: {type: 'integer' },
+    events: {
+    	collection: 'Events',
+    	via: 'recurrent_event_id'
+    }
+  },
+  findByUser: function (user) {
+  	return this.find({
+			or: [
+				{ sunday_user_id: user.id },
+				{ monday_user_id: user.id },
+				{ tuesday_user_id: user.id },
+				{ wednesday_user_id: user.id },
+				{ thursday_user_id: user.id },
+				{ friday_user_id: user.id },
+				{ saturday_user_id: user.id }
+			]
+		}).then(function (rows) {
+			if (!rows.length) { return; }
+			var shifts = {
+				type: 'shifts',
+				rows: rows,
+				user: user
+			};
+			return shifts;
+		});
   }
+
+
 };

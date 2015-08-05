@@ -34,6 +34,21 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
+  },
+
+  '/users/hours/:zone' : {
+  	controller: 'UsersController',
+  	action: 'hours'
+  },
+
+  '/users/hours/:zone/:start' : {
+  	controller: 'UsersController',
+  	action: 'hours'
+  },
+
+  '/users/hours/:zone/:start/:end' : {
+  	controller: 'UsersController',
+  	action: 'hours'
   }
 
   /***************************************************************************

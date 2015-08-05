@@ -13,9 +13,14 @@ module.exports = {
    * `EventsController.index()`
    */
   index: function (req, res) {
-    return res.json({
-      todo: 'index() is not implemented yet!'
-    });
+  	Events.find(req.body).populate('user_id').exec(function (error, result) {
+  		if (!error) {
+  			res.json(result);
+  		}
+  		else {
+  			res.json(error);
+  		}
+  	});
   },
 
 

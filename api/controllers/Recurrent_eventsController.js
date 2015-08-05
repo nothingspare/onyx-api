@@ -25,9 +25,23 @@ module.exports = {
    * `Recurrent_eventsController.index()`
    */
   index: function (req, res) {
-	Recurrent_events.find(req.body).exec(function (error, found) {
-		res.json(found);
-	});
+	Recurrent_events.find(req.body)
+		.populate('sunday_user_id')
+		.populate('monday_user_id')
+		.populate('tuesday_user_id')
+		.populate('wednesday_user_id')
+		.populate('thursday_user_id')
+		.populate('friday_user_id')
+		.populate('saturday_user_id')
+		.populate('events')
+		.exec(function (error, rows) {
+			if (!error) {
+				res.json(rows);
+			}
+			else {
+				console.log(error);
+			}
+		});
   },
 
 
