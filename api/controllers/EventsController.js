@@ -38,6 +38,26 @@ module.exports = {
    * `EventsController.add()`
    */
   add: function (req, res) {
+  	var eventParams = _.pick(req.body, 'recurrent_event_id', 'date');
+  	Events.find(eventParams).exec(function (error, events) {
+  		if (error) {
+  			res.status(500);
+  			res.json(error);
+  		}
+  		else {
+  			Events.create(req.body).then(function (error, insert) {
+  				_.each(events, function (event, index) {
+  					Events.destroy({id: event.id}).exec(function () {
+  						console.log(event);
+  					});
+  				});
+  				res.json(insert);
+  			});
+  		}
+  	});
+  },
+
+  oldAdd: function (req, res) {
   	if (req.body) {
   		console.log(req.body);
   		Events.find({
